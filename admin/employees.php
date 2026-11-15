@@ -15,17 +15,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     
     if ($action === 'add') {
-        $employeeId = 'EMP' . str_pad(rand(1, 99999), 5, '0', STR_PAD_LEFT);
+        $employeeId = 'EMP' . strtoupper(bin2hex(random_bytes(5)));
         $fullName = sanitizeInput($_POST['full_name'] ?? '');
         $email = sanitizeInput($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
-        $securityKey = sanitizeInput($_POST['security_key'] ?? '');
+        $securityKey = $_POST['security_key'] ?? '';
         
         if (empty($fullName) || empty($email) || empty($password) || empty($securityKey)) {
             $message = 'Please fill in all fields';
             $messageType = 'error';
-        } elseif (strlen($password) < 6) {
-            $message = 'Password must be at least 6 characters';
+        } elseif (strlen($password) < 12) {
+            $message = 'Password must be at least 12 characters';
+            $messageType = 'error';
+        } elseif (strlen($securityKey) < 12) {
+            $message = 'Security key must be at least 12 characters';
+            $messageType = 'error';
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $message = 'Please enter a valid email address';
             $messageType = 'error';
         } else {
             try {
@@ -42,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $messageType = 'success';
                 }
             } catch(PDOException $e) {
-                $message = 'Database error: ' . $e->getMessage();
+                error_log('VaultCore employee management database error');
+                $message = 'Unable to complete request. Please try again.';
                 $messageType = 'error';
             }
         }
@@ -198,7 +205,7 @@ $employees = $stmt->fetchAll();
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" placeholder="Create password (min 6 chars)" required>
+                    <input type="password" name="password" placeholder="Create password (min 12 chars)" required>
                 </div>
                 <div class="form-group">
                     <label>Security Key</label>

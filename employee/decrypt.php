@@ -18,6 +18,14 @@ $messageType = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'decrypt') {
     if (!verifyCsrfToken($_POST['csrf_token'] ?? '')) { http_response_code(403); exit('Invalid or expired form token. Refresh and try again.'); }
+    // Session-scoped throttling; see security notes for multi-session limitations.
+    $attempts = $_SESSION['decrypt_failures'] ?? [];
+    $attempts = array_values(array_filter($attempts, static fn($t) => is_int($t) && $t > time() - 900));
+    $_SESSION['decrypt_failures'] = $attempts;
+    if (count($attempts) >= 5) {
+        http_response_code(429);
+        exit('Too many failed attempts. Please wait 15 minutes.');
+    }
     $accountNumber = sanitizeInput($_POST['account_number'] ?? '');
     $securityKey = sanitizeInput($_POST['security_key'] ?? '');
     
@@ -83,6 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $messageType = 'error';
         }
     } else {
+        $_SESSION['decrypt_failures'][] = time();
+        error_log('VaultCore rejected employee decryption key for employee id ' . (int)$employeeId);
         $message = "Invalid security key";
         $messageType = 'error';
     }
@@ -176,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <?php if ($decryptedNote): ?>
             <div class="decrypt-result">
                 <h3>Decryption Result</h3>
-                <p><strong><?= $customerInfo ?></strong></p>
+                <p><strong><?= htmlspecialchars($customerInfo, ENT_QUOTES, 'UTF-8') ?></strong></p>
                 <div class="decrypted-note"><?= nl2br(htmlspecialchars($decryptedNote)) ?></div>
                 <p style="margin-top: 12px; color: var(--gray-500); font-size: 0.8rem;">
                     ⚠️ This data is only visible to authorized employees

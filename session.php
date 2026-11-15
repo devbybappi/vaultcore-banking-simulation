@@ -44,9 +44,30 @@ function requireLogin($allowedTypes = []) {
         header('Location: ../index.php?error=Please login first');
         exit;
     }
-    if (!empty($allowedTypes) && !in_array(getUserType(), $allowedTypes)) {
+    if (!empty($allowedTypes) && !in_array(getUserType(), $allowedTypes, true)) {
         header('Location: ../index.php?error=Access denied');
         exit;
+    }
+    // Re-check account status on each protected request so disabled users lose access.
+    if (getUserType() === 'employee' || getUserType() === 'customer') {
+        require_once __DIR__ . '/database.php';
+        try {
+            $table = getUserType() === 'employee' ? 'employees' : 'customers';
+            $db = new Database();
+            $pdo = $db->getConnection();
+            $check = $pdo->prepare("SELECT status FROM {$table} WHERE id = ? LIMIT 1");
+            $check->execute([getUserId()]);
+            if ($check->fetchColumn() !== 'active') {
+                $_SESSION = [];
+                session_regenerate_id(true);
+                header('Location: ../index.php?error=Account unavailable');
+                exit;
+            }
+        } catch (PDOException | RuntimeException $e) {
+            error_log('VaultCore account status check failed');
+            http_response_code(503);
+            exit('Service temporarily unavailable.');
+        }
     }
 }
 ?>
