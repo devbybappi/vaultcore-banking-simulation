@@ -4,6 +4,27 @@
 
 VaultCore is a PHP/MySQL classroom project demonstrating role-based dashboards, simulated bank accounts and transfers, and historical/classical cipher exercises. **Not a real bank or a production-ready security system.** No real funds or confidential information should be used.
 
+## Screenshots
+
+Real screenshots from the local VaultCore v1.4 educational demonstration. All accounts and transactions shown should be demonstration data only.
+
+### Homepage
+![VaultCore homepage](screenshots/01-homepage.png)
+
+### Admin dashboard
+![VaultCore admin dashboard](screenshots/02-admin-dashboard.png)
+
+### Customer dashboard
+![VaultCore customer dashboard](screenshots/03-customer-dashboard.png)
+
+### Simulated money transfer
+![VaultCore simulated money transfer](screenshots/04-money-transfer.png)
+
+### Employee dashboard
+![VaultCore employee dashboard](screenshots/05-employee-dashboard.png)
+
+> **Cryptography modules:** Vigenère, Rail Fence, Columnar, and Hill are PHP backend modules, not standalone demonstration screens. They are not pictured here. Classical ciphers are for learning only, not for protecting real financial data.
+
 ## Main features
 
 - Admin: customer/employee management, transaction overview, cipher activity logs
@@ -51,4 +72,3 @@ Additional seeded users are in `database.sql`. These intentionally weak credenti
 Read `RELEASE_NOTES_V1.4.md` for the change list, upgrade checklist, known limitations, and manual regression tests.
 
 **Developer:** Abhijit Kar Bappi · [GitHub](https://github.com/devbybappi)
-"# vaultcore-banking-simulation" 
