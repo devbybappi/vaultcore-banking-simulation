@@ -1,0 +1,35 @@
+/* VaultCore v1.2 — presentation-only design layer. Existing application logic is untouched. */
+:root{--primary:#1e3a8a;--primary-dark:#0b1220;--primary-light:#3b82f6;--success:#10b981;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-800:#1e293b;--shadow:0 4px 16px rgba(15,23,42,.07);--shadow-lg:0 18px 50px rgba(15,23,42,.11)}
+body{background:#f4f7fc;color:#15243d}
+a,button,input,select,textarea{transition:border-color .2s ease,background-color .2s ease,box-shadow .2s ease}
+:focus-visible{outline:3px solid #3b82f6;outline-offset:3px}
+/* Landing */
+.app-container{max-width:1440px;margin-inline:auto}
+.hero-section{background:#fff;border:1px solid #e5eaf3;border-radius:28px;box-shadow:0 20px 55px rgba(11,18,32,.07)}
+.logo-container{color:#0b1220}.logo-container i{color:#3b82f6}.logo-container h1{letter-spacing:-.045em}
+.hero-tagline{color:#1e3a8a;font-weight:700}.hero-description{color:#64748b;line-height:1.65}
+.btn-primary{background:#1e3a8a;color:#fff}.btn-primary:hover{background:#2563eb}
+.btn-outline{border-color:#cbd5e1;color:#1e3a8a}.btn-outline:hover{border-color:#3b82f6;background:#eff6ff}
+.feature-card{border:1px solid #e5eaf3;background:#f8fafc;border-radius:18px;box-shadow:none;transition:transform .2s,border-color .2s,box-shadow .2s}
+.feature-card:hover{transform:translateY(-3px);border-color:#93c5fd;box-shadow:0 14px 25px rgba(30,58,138,.08)}
+.feature-card i{color:#1e3a8a}.cipher-badges .badge{background:#eef4ff;color:#1e3a8a}
+.footer{padding:30px 18px;color:#64748b}.footer p:first-child{font-weight:700;color:#334155}.footer-sub{margin-top:7px}
+/* Auth forms */
+.auth-card,.login-card,.register-card{border:1px solid #e2e8f0;box-shadow:0 20px 55px rgba(11,18,32,.09)}
+input:focus,select:focus,textarea:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.13)}
+/* All dashboard roles */
+.sidebar{background:linear-gradient(180deg,#0b1220 0%,#102246 100%);border-right:1px solid #243657;box-shadow:5px 0 28px rgba(11,18,32,.09)}
+.sidebar-brand{color:#fff;border-bottom-color:rgba(255,255,255,.1);letter-spacing:-.025em}
+.sidebar-brand .brand-icon{filter:none}
+.sidebar-nav a{color:#c2cee0;border:1px solid transparent}
+.sidebar-nav a:hover{background:rgba(59,130,246,.15);color:#fff}
+.sidebar-nav a.active{background:#1e3a8a;color:#fff;border-color:rgba(147,197,253,.22)}
+.main-content,.dashboard-content{background:#f4f7fc}
+.card,.stat-card,.dashboard-card,.content-card,.panel{border-color:#e2e8f0;box-shadow:0 5px 22px rgba(15,23,42,.055)}
+.balance-card{background:linear-gradient(125deg,#0b1220,#1e3a8a 70%,#2563eb);color:#fff}
+th{background:#edf3fb;color:#243755;border-bottom-color:#dbe5f3}
+tbody tr:hover{background:#f7faff}
+.badge-success,.status-success{background:#dcfce7;color:#047857}
+.badge-danger,.status-danger{background:#fee2e2;color:#b91c1c}
+@media(max-width:760px){.hero-section{border-radius:18px}.feature-card{border-radius:14px}.footer{font-size:.82rem}.sidebar{box-shadow:0 10px 25px rgba(11,18,32,.15)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}

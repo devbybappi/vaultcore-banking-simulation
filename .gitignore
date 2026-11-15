@@ -1,0 +1,11 @@
+# Local configuration and environment files
+.env
+.env.*
+!.env.example
+config.local.php
+*.log
+.DS_Store
+.idea/
+.vscode/
+vendor/
+node_modules/
