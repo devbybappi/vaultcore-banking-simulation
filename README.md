@@ -51,3 +51,4 @@ Additional seeded users are in `database.sql`. These intentionally weak credenti
 Read `RELEASE_NOTES_V1.4.md` for the change list, upgrade checklist, known limitations, and manual regression tests.
 
 **Developer:** Abhijit Kar Bappi · [GitHub](https://github.com/devbybappi)
+"# vaultcore-banking-simulation" 
